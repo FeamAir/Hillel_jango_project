@@ -6,7 +6,13 @@
 </head>
 <body>
     <form method="get">
-        <h1>My LMS</h1>
+        <h1>Make a choice</h1>
     </form>
+        <table id="menu">
+        <tr>
+            <td style="margin: 5px; padding: 5px;"><a href="{% url 'teachers:list' %}">Teachers</a></td>
+            <td style="margin: 5px; padding: 5px;"><a href="{% url 'groups:list' %}">Groups</a></td>
+        </tr>
+    </table>
 </body>
 </html>

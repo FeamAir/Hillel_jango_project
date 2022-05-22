@@ -1,16 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
+
 from .models import Teacher
 from .utils import qs2html
 from webargs.fields import Int, Str
 from webargs.djangoparser import use_kwargs, use_args
-from django.views.decorators.csrf import csrf_exempt
+
 from .forms import TeacherCreateForm
 
-
-def index(request):
-    return render(request, "teachers/index.html")
 
 
 @use_kwargs(
@@ -46,7 +45,7 @@ def list_teachers(request, args):
     )
 
 
-@csrf_exempt
+
 def create_teachers(request):
     if request.method == 'GET':
         form = TeacherCreateForm()
@@ -55,18 +54,13 @@ def create_teachers(request):
         if form.is_valid():
             form.save()
 
-            return HttpResponseRedirect('/teachers/')
+            return HttpResponseRedirect(reverse('teachers:list'))
 
-    return render(
-        request,
-        "teachers/create.html",
-        {'title': "Create new Teacher", "form": form}
-    )
+    return render(request, "teachers/create.html", {"form": form})
 
 
-@csrf_exempt
 def update_teachers(request, pk):
-    teacher = Teacher.objects.get(pk=pk)
+    teacher = get_object_or_404(Teacher, pk=pk)
     if request.method == 'GET':
         form = TeacherCreateForm(instance=teacher)
     else:
@@ -74,10 +68,16 @@ def update_teachers(request, pk):
         if form.is_valid():
             form.save()
 
-            return HttpResponseRedirect('/teachers/')
+            return HttpResponseRedirect(reverse('teachers:list'))
 
-    return render(
-        request,
-        "teachers/update.html",
-        {'title': "Update Teacher", "form": form}
-    )
+    return render(request, "teachers/update.html", {"form": form})
+
+
+def delete_teachers(request, pk):
+    teachers = get_object_or_404(Teacher, pk=pk)
+
+    if request.method == "POST":
+        teachers.delete()
+        return HttpResponseRedirect(reverse('teachers:list'))
+
+    return render(request, 'teachers/delete.html', {'teachers': teachers})
