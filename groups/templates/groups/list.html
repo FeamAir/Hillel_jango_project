@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LMS - {{ title }}</title>
+</head>
+<body>
+    <form method="get">
+        <label for="fname">language group:</label><br>
+        <input type="text" id="fname" name="language_groups" placeholder="Franch"><br>
+        <label for="lname">Univer subject:</label><br>
+        <input type="text" id="lname" name="univer_subject" placeholder="Math"><br>
+        <label for="fname">How many student:</label><br>
+        <input type="number" id="age_id" name="cnt_students" placeholder="122"><br>   <br>
+
+        <input type="submit" value="Serch">
+    </form>
+    <br>
+    <a href="create/">Create</a>
+    <br>
+    <br>
+    {% for group in groups%}
+        <a href="update/{{group.pk}}">Edit</a>&nbsp;&nbsp;{{ group }}<br>
+    {% endfor %}
+
+</body>
+</html>

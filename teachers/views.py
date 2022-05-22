@@ -3,10 +3,14 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Teacher
 from .utils import qs2html
-from webargs.fields import Int
-from webargs.djangoparser import use_kwargs
+from webargs.fields import Int, Str
+from webargs.djangoparser import use_kwargs, use_args
 from django.views.decorators.csrf import csrf_exempt
 from .forms import TeacherCreateForm
+
+
+def index(request):
+    return render(request, "teachers/index.html")
 
 
 @use_kwargs(
@@ -21,10 +25,26 @@ def generate_teachers(request, cnt):
     html = qs2html(tc)
     return HttpResponse(html)
 
-def list_teachers(request):
+
+@use_args(
+    {
+        "first_name": Str(required=False),
+        "last_name": Str(required=False),
+        "age": Int(required=False),
+    },
+    location="query"
+)
+def list_teachers(request, args):
     tc = Teacher.objects.all()
-    html = qs2html(tc)
-    return HttpResponse(html)
+    for key, value in args.items():
+        tc = tc.filter(**{key: value})
+
+    return render(
+        request,
+        "teachers/list.html",
+        {'title': "List of Teachers", "teachers": tc}
+    )
+
 
 @csrf_exempt
 def create_teachers(request):
@@ -37,13 +57,27 @@ def create_teachers(request):
 
             return HttpResponseRedirect('/teachers/')
 
-    html_form = f"""
-        <form method="post">
-            <table>
-                {form.as_table()}
-            </table>
-            <input type="submit" value="Create">
-        </form> 
-        """
+    return render(
+        request,
+        "teachers/create.html",
+        {'title': "Create new Teacher", "form": form}
+    )
 
-    return HttpResponse(html_form)
+
+@csrf_exempt
+def update_teachers(request, pk):
+    teacher = Teacher.objects.get(pk=pk)
+    if request.method == 'GET':
+        form = TeacherCreateForm(instance=teacher)
+    else:
+        form = TeacherCreateForm(request.POST, instance=teacher)
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect('/teachers/')
+
+    return render(
+        request,
+        "teachers/update.html",
+        {'title': "Update Teacher", "form": form}
+    )
