@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {%  csrf_token %}
+        <p> Do yow want delete
+            <span style="font-style: italic; font-weight: bold;">
+                {{ groups.language_groups }} {{ groups.univer_subject }}
+            </span>?
+        </p>
+        <input type="submit" value="Agree">
+        <a href="{% url 'groups:list' %}">Cancel</a>
+    </form>
+{% endblock %}l>

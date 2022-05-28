@@ -1,27 +1,68 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>LMS - {{ title }}</title>
-</head>
-<body>
-    <form method="get">
-        <label for="fname">First name:</label><br>
-        <input type="text" id="fname" name="first_name" placeholder="Ivan"><br>
-        <label for="lname">Last name:</label><br>
-        <input type="text" id="lname" name="last_name" placeholder="King"><br>
-        <label for="fname">First name:</label><br>
-        <input type="number" id="age_id" name="age" placeholder="45"><br>   <br>
+{% extends 'base.html' %}
 
-        <input type="submit" value="Serch">
-    </form>
-    <br>
-    <a href="create/">Create</a>
-    <br>
-    <br>
-    {% for teacher in teachers%}
-        <a href="update/{{teacher.pk}}">Edit</a>&nbsp;&nbsp;{{ teacher }}<br>
+{% block title %}List of teachers{% endblock %}
+
+{% block style %}
+#list {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+    }
+
+#list td {
+    border: 1px solid #dddd;
+    text-align: center;
+    padding: 8px;
+    }
+
+#list tr:nth-child(even) {
+    background-color: #dddd;
+    }
+
+{% endblock %}
+
+{% block content %}
+<form method="get" xmlns="http://www.w3.org/1999/html">
+    <table>
+        <tr>
+            <td> <label for="fname" style="font-weight: bold;">First name:</label><br></td>
+            <td><input type="text" id="fname" name="first_name" placeholder="Ivan"><br></td>
+        </tr>
+        <tr>
+            <td><label for="lname" style="font-weight: bold;">Last name:</label><br></td>
+            <td><input type="text" id="lname" name="last_name" placeholder="King"><br></td>
+        </tr>
+        <tr>
+            <td><label for="fname" style="font-weight: bold;">Age:</label><br></td>
+            <td><input type="number" id="age_id" name="age" placeholder="45"></td>
+        </tr>
+    </table>
+    <input type="submit" value="Serch">
+</form>
+<br>
+<table id="list" >
+    <thead>
+        <tr>
+            <th>N</th>
+            <th>&#128100; First name</th>
+            <th>&#128100; Last name</th>
+            <th>&#128218; Subject</th>
+            <th>&#9742;Phone number</th>
+            <th>&#9997; Edit</th>
+            <th>&#128686; Delete</th>
+        </tr>
+    </thead>
+    {% for teacher in teachers %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ teacher.first_name }}</td>
+            <td>{{ teacher.last_name }}</td>
+            <td>{{ teacher.univer_subject }}</td>
+            <td>{% if teacher.phone_number %}{{ teacher.phone_number }}{% endif %}</td>
+            <td><a href="{% url 'teachers:update' teacher.pk %}">Submit</a></td>
+            <td><a href="{% url 'teachers:delete' teacher.pk %}">Submit</a></td>
+        </tr>
     {% endfor %}
+</table>
+{% endblock %}
 
-</body>
-</html>
