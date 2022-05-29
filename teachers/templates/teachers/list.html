@@ -2,54 +2,18 @@
 
 {% block title %}List of teachers{% endblock %}
 
-{% block style %}
-#list {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    }
-
-#list td {
-    border: 1px solid #dddd;
-    text-align: center;
-    padding: 8px;
-    }
-
-#list tr:nth-child(even) {
-    background-color: #dddd;
-    }
-
-{% endblock %}
-
 {% block content %}
-<form method="get" xmlns="http://www.w3.org/1999/html">
-    <table>
-        <tr>
-            <td> <label for="fname" style="font-weight: bold;">First name:</label><br></td>
-            <td><input type="text" id="fname" name="first_name" placeholder="Ivan"><br></td>
-        </tr>
-        <tr>
-            <td><label for="lname" style="font-weight: bold;">Last name:</label><br></td>
-            <td><input type="text" id="lname" name="last_name" placeholder="King"><br></td>
-        </tr>
-        <tr>
-            <td><label for="fname" style="font-weight: bold;">Age:</label><br></td>
-            <td><input type="number" id="age_id" name="age" placeholder="45"></td>
-        </tr>
-    </table>
-    <input type="submit" value="Serch">
-</form>
 <br>
-<table id="list" >
+<table class="table table-dark table-hover">
     <thead>
         <tr>
-            <th>N</th>
-            <th>&#128100; First name</th>
-            <th>&#128100; Last name</th>
-            <th>&#128218; Subject</th>
-            <th>&#9742;Phone number</th>
-            <th>&#9997; Edit</th>
-            <th>&#128686; Delete</th>
+            <th style="width=5%">N</th>
+            <th style="width=30%">&#128100; First name</th>
+            <th style="width=30%">&#128100; Last name</th>
+            <th style="width=15%">&#128218; Subject</th>
+            <th style="width=10%">&#9742;Phone number</th>
+            <th style="width=5%">&#9997; Edit</th>
+            <th style="width=5%">&#128686; Delete</th>
         </tr>
     </thead>
     {% for teacher in teachers %}
@@ -59,8 +23,8 @@
             <td>{{ teacher.last_name }}</td>
             <td>{{ teacher.univer_subject }}</td>
             <td>{% if teacher.phone_number %}{{ teacher.phone_number }}{% endif %}</td>
-            <td><a href="{% url 'teachers:update' teacher.pk %}">Submit</a></td>
-            <td><a href="{% url 'teachers:delete' teacher.pk %}">Submit</a></td>
+            <td><a class="btn btn-info" href="{% url 'teachers:update' teacher.pk %}">Submit</a></td>
+            <td><a class="btn btn-danger" href="{% url 'teachers:delete' teacher.pk %}">Submit</a></td>
         </tr>
     {% endfor %}
 </table>

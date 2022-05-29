@@ -1,13 +1,12 @@
-from django.shortcuts import render, get_object_or_404
-
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
-from .models import Group
+from webargs.djangoparser import use_args
+from webargs.fields import Int, Str
 
 from .forms import GroupCreateForm
-from webargs.fields import Int, Str
-from webargs.djangoparser import use_args
+from .models import Group
 
 
 @use_args(
@@ -26,7 +25,6 @@ def list_groups(request, args):
     return render(request, "groups/list.html", {"groups": gr})
 
 
-
 def create_groups(request):
     if request.method == 'GET':
         form = GroupCreateForm()
@@ -38,7 +36,6 @@ def create_groups(request):
             return HttpResponseRedirect(reverse('groups:list'))
 
     return render(request, "groups/create.html", {"form": form})
-
 
 
 def update_groups(request, pk):

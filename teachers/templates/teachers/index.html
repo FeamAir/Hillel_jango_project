@@ -1,11 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>LMS - Home page</title>
-</head>
-<body>
-    <form method="get">
+{% extends 'base.html' %}
+
+{% block title %}LMS - Home page{% endblock %}
+
+
+{% block content %}
+<form method="get">
         <h1>Make a choice</h1>
     </form>
         <table id="menu">
@@ -14,5 +13,4 @@
             <td style="margin: 5px; padding: 5px;"><a href="{% url 'groups:list' %}">Groups</a></td>
         </tr>
     </table>
-</body>
-</html>
+{% endblock %}

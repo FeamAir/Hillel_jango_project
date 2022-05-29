@@ -1,7 +1,9 @@
+from random import choice as ch
+
 from django.db import models
 
 from faker import Faker
-from random import choice as ch
+
 from .validators import phone_number_validator
 
 
@@ -10,10 +12,17 @@ class Teacher(models.Model):
     last_name = models.CharField(max_length=50)
     univer_subject = models.CharField(max_length=50)
     age = models.PositiveIntegerField()
-    phone_number = models.CharField(max_length=15, null=True, validators=[phone_number_validator])
+    phone_number = models.CharField(
+        max_length=15,
+        null=True,
+        validators=[phone_number_validator])
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} {self.univer_subject} {self.age}-{self.phone_number}'
+        return f'{self.first_name}' \
+               f' {self.last_name} ' \
+               f'{self.univer_subject} ' \
+               f'{self.age}-' \
+               f'{self.phone_number}'
 
     @staticmethod
     def gen_teachers(cnt):

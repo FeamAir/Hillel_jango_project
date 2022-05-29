@@ -1,56 +1,20 @@
 {% extends 'base.html' %}
 
-{% block title %}List of teachers{% endblock %}
-
-{% block style %}
-#list {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-    }
-
-#list td {
-    border: 1px solid #dddd;
-    text-align: center;
-    padding: 8px;
-    }
-
-#list tr:nth-child(even) {
-    background-color: #dddd;
-    }
-
-{% endblock %}
+{% block title %}List of groups{% endblock %}
 
 
 {% block content %}
-<form method="get">
-    <table>
-        <tr>
-            <td> <label for="fname" style="font-weight: bold;">language group:</label><br></td>
-            <td><input type="text" id="fname" name="language_groups" placeholder="Franch"><br></td>
-        </tr>
-        <tr>
-            <td><label for="lname" style="font-weight: bold;">Univer subject:</label><br></td>
-            <td><input type="text" id="lname" name="univer_subject" placeholder="Math"><br></td>
-        </tr>
-        <tr>
-            <td><label for="fname" style="font-weight: bold;">How many student:</label><br></td>
-            <td><input type="number" id="age_id" name="cnt_students" placeholder="45"></td>
-        </tr>
-    </table>
-    <input type="submit" value="Serch">
-</form>
 <br>
-<table id="list" >
+<table class="table table-dark table-hover">
     <thead>
         <tr>
-            <th>N</th>
-            <th>&#128483; Language groups</th>
-            <th>&#128218; Subject</th>
-            <th>&#128101; Total students</th>
-            <th>&#9742; Phone number</th>
-            <th>&#9997; Edit</th>
-            <th>&#128686; Delete</th>
+            <th style="width=5%">N</th>
+            <th style="width=20%">&#128483; Language groups</th>
+            <th style="width=20%">&#128218; Subject</th>
+            <th style="width=20%">&#128101; Total students</th>
+            <th style="width=25%">&#9742; Phone number</th>
+            <th style="width=5%">&#9997; Edit</th>
+            <th style="width=5%">&#128686; Delete</th>
         </tr>
     </thead>
     {% for group in groups %}
@@ -60,8 +24,8 @@
             <td>{{ group.univer_subject }}</td>
             <td>{{ group.cnt_students  }}</td>
             <td>{% if teacher.phone_number %}{{ teacher.phone_number }}{% endif %}</td>
-            <td><a href="{% url 'groups:update' group.pk %}">Submit</a></td>
-            <td><a href="{% url 'groups:delete' group.pk %}">Submit</a></td>
+            <td><a class="btn btn-info" href="{% url 'groups:update' group.pk %}">Submit</a></td>
+            <td><a class="btn btn-danger" href="{% url 'groups:delete' group.pk %}">Submit</a></td>
         </tr>
     {% endfor %}
 </table>

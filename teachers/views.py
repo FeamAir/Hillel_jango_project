@@ -1,15 +1,13 @@
-from django.shortcuts import render, get_object_or_404
-
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
-from .models import Teacher
-from .utils import qs2html
+from webargs.djangoparser import use_args, use_kwargs
 from webargs.fields import Int, Str
-from webargs.djangoparser import use_kwargs, use_args
 
 from .forms import TeacherCreateForm
-
+from .models import Teacher
+from .utils import qs2html
 
 
 @use_kwargs(
@@ -43,7 +41,6 @@ def list_teachers(request, args):
         "teachers/list.html",
         {'title': "List of Teachers", "teachers": tc}
     )
-
 
 
 def create_teachers(request):
