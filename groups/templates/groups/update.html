@@ -1,17 +1,20 @@
 {% extends 'base.html' %}
+
 {% load crispy_forms_filters %}
 
 {% block title %}Update{% endblock %}
 
 {% block content %}
-    <form method="post">
-        {%  csrf_token %}
-        <div class="position-absolute top-50 start-50 translate-middle">
-            {{form | crispy}}
-            <div class="mt-2">
-                <input class="btn btn-outline-success" type="submit" value="Update">
-                <a class="btn btn-outline-dark" href="{% url 'groups:list' %}">Cancel</a>
-            </div>
-        </div>
-    </form>
-{% endblock %}l>
+<form method="post">
+    {% csrf_token %}
+    {{form | crispy}}
+    <div class="mt-2">
+        <input class="btn btn-outline-success" type="submit" value="Update">
+        <a class="btn btn-outline-dark" href="{% url 'groups:list' %}">Cancel</a>
+    </div>
+</form>
+{% with list_object=group.teachers.all %}
+    {% include 'includes/teachers_list_table.html' %}
+{% endwith %}
+{% endblock %}
+

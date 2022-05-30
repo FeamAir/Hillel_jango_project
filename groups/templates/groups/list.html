@@ -4,29 +4,50 @@
 
 
 {% block content %}
-<br>
-<table class="table table-dark table-hover">
-    <thead>
-        <tr>
-            <th style="width=5%">N</th>
-            <th style="width=20%">&#128483; Language groups</th>
-            <th style="width=20%">&#128218; Subject</th>
-            <th style="width=20%">&#128101; Total students</th>
-            <th style="width=25%">&#9742; Phone number</th>
-            <th style="width=5%">&#9997; Edit</th>
-            <th style="width=5%">&#128686; Delete</th>
-        </tr>
-    </thead>
-    {% for group in groups %}
+    <table class="table table-dark table-hover">
+        <thead>
+            <tr>
+                <th style="width=5%">N</th>
+                <th style="width=20%">&#128483; Name</th>
+                <th style="width=20%">&#128218; Start Date</th>
+                <th style="width=20%">&#128101; End Date</th>
+                <th style="width=5%">&#9997; Edit</th>
+                <th style="width=5%">&#128686; Delete</th>
+            </tr>
+        </thead>
+        {% for group in groups %}
         <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ group.language_groups }}</td>
-            <td>{{ group.univer_subject }}</td>
-            <td>{{ group.cnt_students  }}</td>
-            <td>{% if teacher.phone_number %}{{ teacher.phone_number }}{% endif %}</td>
-            <td><a class="btn btn-info" href="{% url 'groups:update' group.pk %}">Submit</a></td>
-            <td><a class="btn btn-danger" href="{% url 'groups:delete' group.pk %}">Submit</a></td>
+            <td>{{ group.name }}</td>
+            <td>{{ group.start_date }}</td>
+            <td>{% if group.end_date %}{{ group.end_date }}{% endif %}</td>
+            <td><a class="btn btn-info" href="{% url 'groups:update' group.pk %}">Edit</a></td>
+            <td><a class="btn btn-danger" href="{% url 'groups:delete' group.pk %}">Delete</a></td>
         </tr>
-    {% endfor %}
-</table>
+        {% endfor %}
+    </table>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

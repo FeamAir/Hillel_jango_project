@@ -1,45 +1,25 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
-from webargs.djangoparser import use_args, use_kwargs
-from webargs.fields import Int, Str
-
 from .forms import TeacherCreateForm
+from .forms import TeacherFilterForm
 from .models import Teacher
-from .utils import qs2html
 
 
-@use_kwargs(
-    {
-        "cnt": Int(required=False, missing=10)
-    },
-    location="query"
-)
-def generate_teachers(request, cnt):
-    Teacher.gen_teachers(cnt)
-    tc = Teacher.objects.all()
-    html = qs2html(tc)
-    return HttpResponse(html)
+def generate_teachers(request):
+    Teacher.gen_teachers()
+    return HttpResponseRedirect(reverse('teachers:list'))
 
 
-@use_args(
-    {
-        "first_name": Str(required=False),
-        "last_name": Str(required=False),
-        "age": Int(required=False),
-    },
-    location="query"
-)
-def list_teachers(request, args):
-    tc = Teacher.objects.all()
-    for key, value in args.items():
-        tc = tc.filter(**{key: value})
+def list_teachers(request):
+    teachers = Teacher.objects.all()
+    teachers_filter = TeacherFilterForm(data=request.GET, queryset=teachers)
 
     return render(
         request,
         "teachers/list.html",
-        {'title': "List of Teachers", "teachers": tc}
+        {'teachers_filter': teachers_filter}
     )
 
 

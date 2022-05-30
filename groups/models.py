@@ -1,18 +1,17 @@
-from django.db import models
+import datetime
 
-from .validators import phone_number_validator
+from django.db import models
 
 
 class Group(models.Model):
-    language_groups = models.CharField(max_length=50)
-    univer_subject = models.CharField(max_length=50)
-    cnt_students = models.PositiveIntegerField()
-    phone_number = models.CharField(max_length=15,
-                                    null=True,
-                                    validators=[phone_number_validator])
+    name = models.CharField(max_length=50)
+    start_date = models.DateField(default=datetime.date.today)
+    end_date = models.DateField(null=True)
+    create_datetime = models.DateTimeField(auto_now_add=True)
+    update_datetime = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        db_table = 'group'
 
     def __str__(self):
-        return f'{self.language_groups} ' \
-               f'{self.univer_subject} ' \
-               f'{self.cnt_students}-' \
-               f'{self.phone_number}'
+        return self.name

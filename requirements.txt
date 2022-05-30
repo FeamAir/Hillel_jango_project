@@ -4,3 +4,4 @@ crispy-bootstrap5==0.6
 ipython==8.0.0
 webargs~=8.1.0
 Faker~=13.11.0
+django-filter~=21.1
