@@ -10,7 +10,7 @@ from .views import update_teachers
 app_name = "teachers"
 
 urlpatterns = [
-    path("generate_teachers/", generate_teachers),
+    path("generate_teachers/", generate_teachers, name="random"),
     path('', list_teachers, name='list'),
     path("create/", create_teachers, name="create"),
     path("update/<int:pk>/", update_teachers, name="update"),

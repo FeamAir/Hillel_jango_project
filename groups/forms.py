@@ -3,18 +3,21 @@ from django import forms
 from .models import Group
 
 
-class GroupCreateForm(forms.ModelForm):
+class GroupBaseForm(forms.ModelForm):
     class Meta:
         model = Group
         fields = [
-            "language_groups",
-            "univer_subject",
-            "cnt_students",
-            "phone_number"
+            "name",
+            "start_date",
+            "end_date"
         ]
 
-    def clean_phone_number(self):
-        str1 = self.cleaned_data["phone_number"]
-        f = filter(str.isdecimal, str1)
-        result = "".join(f)
-        return result
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'})
+        }
+
+
+class GroupUpdateForm(GroupBaseForm):
+    class Meta(GroupBaseForm.Meta):
+        exclude = ['start_date']

@@ -4,6 +4,8 @@ from django.db import models
 
 from faker import Faker
 
+from groups.models import Group
+
 from .validators import phone_number_validator
 
 
@@ -16,6 +18,11 @@ class Teacher(models.Model):
         max_length=15,
         null=True,
         validators=[phone_number_validator])
+    group = models.ForeignKey(
+        Group,
+        on_delete=models.SET_NULL,
+        null=True,
+        related_name="teachers")
 
     def __str__(self):
         return f'{self.first_name}' \
@@ -25,7 +32,8 @@ class Teacher(models.Model):
                f'{self.phone_number}'
 
     @staticmethod
-    def gen_teachers(cnt):
+    def gen_teachers():
+        cnt = 10
         fk = Faker()
         test_list = ["Mathematics", "Chemistry", "Algebra", "Logic", "History",
                      "Physics"]
@@ -34,5 +42,7 @@ class Teacher(models.Model):
                 first_name=fk.first_name(),
                 last_name=fk.last_name(),
                 univer_subject=ch(test_list),
-                age=fk.random_int(min=25, max=55))
+                age=fk.random_int(min=25, max=55),
+                phone_number=fk.phone_number())
+
             tc.save()

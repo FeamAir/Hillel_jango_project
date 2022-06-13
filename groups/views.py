@@ -2,54 +2,21 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 
-from webargs.djangoparser import use_args
-from webargs.fields import Int, Str
-
-from .forms import GroupCreateForm
+from .forms import GroupBaseForm, GroupUpdateForm
 from .models import Group
-
-
-@use_args(
-    {
-        "language_groups": Str(required=False),
-        "univer_subject": Str(required=False),
-        "cnt_students": Int(required=False),
-    },
-    location="query"
-)
-def list_groups(request, args):
-    gr = Group.objects.all()
-    for key, value in args.items():
-        gr = gr.filter(**{key: value})
-
-    return render(request, "groups/list.html", {"groups": gr})
 
 
 def create_groups(request):
     if request.method == 'GET':
-        form = GroupCreateForm()
+        form = GroupBaseForm()
     else:
-        form = GroupCreateForm(request.POST)
+        form = GroupBaseForm(request.POST)
         if form.is_valid():
             form.save()
 
             return HttpResponseRedirect(reverse('groups:list'))
 
     return render(request, "groups/create.html", {"form": form})
-
-
-def update_groups(request, pk):
-    group = get_object_or_404(Group, pk=pk)
-    if request.method == 'GET':
-        form = GroupCreateForm(instance=group)
-    else:
-        form = GroupCreateForm(request.POST, instance=group)
-        if form.is_valid():
-            form.save()
-
-            return HttpResponseRedirect(reverse('groups:list'))
-
-    return render(request, "groups/update.html", {"form": form})
 
 
 def delete_groups(request, pk):
@@ -60,3 +27,26 @@ def delete_groups(request, pk):
         return HttpResponseRedirect(reverse('groups:list'))
 
     return render(request, 'groups/delete.html', {'groups': groups})
+
+
+def list_groups(request):
+    groups = Group.objects.all()
+    return render(request, "groups/list.html", {"groups": groups})
+
+
+def update_groups(request, pk):
+    group = get_object_or_404(Group, pk=pk)
+    if request.method == 'POST':
+        form = GroupUpdateForm(request.POST, instance=group)
+        if form.is_valid():
+            form.save()
+
+            return HttpResponseRedirect(reverse('groups:list'))
+    else:
+        form = GroupUpdateForm(instance=group)
+
+    return render(
+        request,
+        "groups/update.html",
+        {"form": form, "group": group}
+    )
