@@ -1,8 +1,8 @@
 from django.urls import path
 
-from .views import list_groups
 from .views import create_groups
 from .views import delete_groups
+from .views import list_groups
 from .views import update_groups
 
 app_name = "groups"
