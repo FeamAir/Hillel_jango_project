@@ -7,18 +7,20 @@
     <table class="table table-dark table-hover">
         <thead>
             <tr>
-                <th style="width=5%">N</th>
-                <th style="width=20%">&#128483; Name</th>
-                <th style="width=20%">&#128218; Start Date</th>
-                <th style="width=20%">&#128101; End Date</th>
-                <th style="width=5%">&#9997; Edit</th>
-                <th style="width=5%">&#128686; Delete</th>
+                <th style="width:5%">N</th>
+                <th style="width:20%">&#128483; Name</th>
+                <th style="width:20%">&#x1F4DA; Course</th>
+                <th style="width:20%">&#128218; Start Date</th>
+                <th style="width:20%">&#128101; End Date</th>
+                <th style="width:5%">&#9997; Edit</th>
+                <th style="width:10%">&#128686; Delete</th>
             </tr>
         </thead>
         {% for group in groups %}
         <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ group.name }}</td>
+            <td>{% if group.course_group %}{{ group.course_group }}{% endif %}</td>
             <td>{{ group.start_date }}</td>
             <td>{% if group.end_date %}{{ group.end_date }}{% endif %}</td>
             <td><a class="btn btn-info" href="{% url 'groups:update' group.pk %}">Edit</a></td>

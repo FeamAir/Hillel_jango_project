@@ -30,7 +30,7 @@ def delete_groups(request, pk):
 
 
 def list_groups(request):
-    groups = Group.objects.all()
+    groups = Group.objects.all().select_related("course_group")
     return render(request, "groups/list.html", {"groups": groups})
 
 
