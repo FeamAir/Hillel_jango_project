@@ -8,8 +8,10 @@
             <th style="width:15%">&#128218; Subject</th>
             <th style="width:15%">&#9742;Phone number</th>
             <th style="width:5%">&#9742;Group</th>
-            <th style="width:5%">&#9997; Edit</th>
-            <th style="width:15%">&#128686; Delete</th>
+            {% if user.is_authenticated %}
+                <th style="width:5%">&#9997; Edit</th>
+                <th style="width:15%">&#128686; Delete</th>
+            {% endif %}
         </tr>
         </thead>
         {% for teacher in list_object %}
@@ -20,8 +22,10 @@
             <td>{{ teacher.univer_subject }}</td>
             <td>{% if teacher.phone_number %}{{ teacher.phone_number }}{% endif %}</td>
             <td>{% if teacher.group %}{{ teacher.group }}{% endif %}</td>
-            <td><a class="btn btn-info" href="{% url 'teachers:update' teacher.pk %}">Edit</a></td>
-            <td><a class="btn btn-danger" href="{% url 'teachers:delete' teacher.pk %}">Delete</a></td>
+            {% if user.is_authenticated %}
+                <td><a class="btn btn-info" href="{% url 'teachers:update' teacher.pk %}">Edit</a></td>
+                <td><a class="btn btn-danger" href="{% url 'teachers:delete' teacher.pk %}">Delete</a></td>
+            {% endif %}
         </tr>
         {% endfor %}
     </table>

@@ -28,22 +28,3 @@ class UpdateBaseView:
 
         return render(request, cls.template_name, {'form': form})
 
-
-class CreateBaseView:
-    model = None
-    success_url = None
-    template_name = None
-    form_class = None
-
-    @classmethod
-    def update(cls, request):
-        if request.method == 'GET':
-            form = cls.form_class()
-        else:
-            form = cls.form_class(request.POST)
-            if form.is_valid():
-                form.save()
-
-                return HttpResponseRedirect(reverse(cls.success_url))
-
-        return render(request, cls.template_name, {"form": form})

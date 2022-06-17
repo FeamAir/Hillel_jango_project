@@ -10,19 +10,23 @@
                 <th style="width:10%">N</th>
                 <th style="width:35%">&#x1F4DA; Subject Name</th>
                 <th style="width:35%">&#8987; Total hours</th>
-                <th style="width:10%">&#9997; Edit</th>
-                <th style="width:10%">&#128686; Delete</th>
+                {% if user.is_authenticated %}
+                    <th style="width:10%">&#9997; Edit</th>
+                    <th style="width:10%">&#128686; Delete</th>
+                {% endif %}
 
 
             </tr>
         </thead>
-        {% for course in courses %}
+        {% for course in object_list %}
         <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ course.name }}</td>
             <td>{{ course.hour }}</td>
-            <td><a class="btn btn-info" href="{% url 'courses:update' course.pk %}">Edit</a></td>
-            <td><a class="btn btn-danger" href="{% url 'courses:delete' course.pk %}">Delete</a></td>
+            {% if user.is_authenticated %}
+                <td><a class="btn btn-info" href="{% url 'courses:update' course.pk %}">Edit</a></td>
+                <td><a class="btn btn-danger" href="{% url 'courses:delete' course.pk %}">Delete</a></td>
+            {% endif %}
         </tr>
         {% endfor %}
     </table>

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'teachers.apps.TeachersConfig',
     'students.apps.StudentsConfig',
     'courses.apps.CoursesConfig',
+    'accounts.apps.AccountsConfig',
     'crispy_forms',
     'crispy_bootstrap5',
     'django_filters',
@@ -133,3 +134,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap5'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+EMAIL_PORT = 8050
