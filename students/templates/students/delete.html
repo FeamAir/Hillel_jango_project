@@ -4,15 +4,15 @@
 
 {% block content %}
     <form method="post">
-        {%  csrf_token %}
+        {% csrf_token %}
         <p> Do yow want delete
             <span style="font-style: italic; font-weight: bold;">
-                {{ object.name }}
-            </span>?
+                    {{ object.first_name }} {{ object.last_name }}
+                </span>?
         </p>
         <div class="mt-2">
             <input class="btn btn-outline-danger" type="submit" value="Agree">
-            <a class="btn btn-outline-dark" href="{% url 'groups:list' %}">Cancel</a>
+            <a class="btn btn-outline-dark" href="{% url 'students:list' %}">Cancel</a>
         </div>
     </form>
 {% endblock %}l>

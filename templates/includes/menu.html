@@ -21,6 +21,15 @@
           </ul>
         </li>
         <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="studentDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Student
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'students:list' %}">List</a></li>
+            <li><a class="dropdown-item" href="{% url 'students:create' %}">Create</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="groupDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Group
           </a>

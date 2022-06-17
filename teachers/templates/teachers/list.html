@@ -14,7 +14,7 @@
         <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
             <div class="accordion-body">
                 <form method="get">
-                    {{teachers_filter.form | crispy}}
+                    {{object_list.form | crispy}}
                     <input  class="btn btn-info" type="submit" value="Search">
                 </form>
             </div>
@@ -25,7 +25,7 @@
     <a class="btn btn-danger" href="{% url 'teachers:random'%}">Create random teachers(10)</a>
 </div>
 <br>
-{% with list_object=teachers_filter.qs %}
+{% with list_object=object_list.qs %}
     {% include 'includes/teachers_list_table.html' %}
 {% endwith %}
 
