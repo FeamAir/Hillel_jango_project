@@ -1,52 +1,39 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
-from django.urls import reverse
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+from django.views.generic import DeleteView
+from django.views.generic import ListView
+from django.views.generic import UpdateView
 
 from .forms import GroupBaseForm, GroupUpdateForm
 from .models import Group
 
 
-def create_groups(request):
-    if request.method == 'GET':
-        form = GroupBaseForm()
-    else:
-        form = GroupBaseForm(request.POST)
-        if form.is_valid():
-            form.save()
-
-            return HttpResponseRedirect(reverse('groups:list'))
-
-    return render(request, "groups/create.html", {"form": form})
+class CreateGroupsView(CreateView):
+    model = Group
+    success_url = reverse_lazy('groups:list')
+    template_name = 'groups/update.html'
+    form_class = GroupBaseForm
 
 
-def delete_groups(request, pk):
-    groups = get_object_or_404(Group, pk=pk)
-
-    if request.method == "POST":
-        groups.delete()
-        return HttpResponseRedirect(reverse('groups:list'))
-
-    return render(request, 'groups/delete.html', {'groups': groups})
+class DeleteGroupsView(DeleteView):
+    model = Group
+    success_url = reverse_lazy('groups:list')
+    template_name = 'groups/delete.html'
 
 
-def list_groups(request):
-    groups = Group.objects.all()
-    return render(request, "groups/list.html", {"groups": groups})
+class ListGroupView(ListView):
+    model = Group
+    template_name = "groups/list.html"
 
 
-def update_groups(request, pk):
-    group = get_object_or_404(Group, pk=pk)
-    if request.method == 'POST':
-        form = GroupUpdateForm(request.POST, instance=group)
-        if form.is_valid():
-            form.save()
+class UpdateGroupView(UpdateView):
+    model = Group
+    success_url = reverse_lazy('groups:list')
+    template_name = 'groups/update.html'
+    form_class = GroupUpdateForm
 
-            return HttpResponseRedirect(reverse('groups:list'))
-    else:
-        form = GroupUpdateForm(instance=group)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["group"] = self.get_object()
 
-    return render(
-        request,
-        "groups/update.html",
-        {"form": form, "group": group}
-    )
+        return context
