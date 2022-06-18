@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}List of student{% endblock %}
+
+
+{% block content %}
+    <table class="table table-dark table-hover">
+        <thead>
+            <tr>
+                <th style="width:5%">N</th>
+                <th style="width:30%">&#128100; First name</th>
+                <th style="width:30%">&#128100; Last name</th>
+                <th style="width:15%">&#9742;Phone number</th>
+                {% if user.is_authenticated %}
+                    <th style="width:10%">&#9997; Edit</th>
+                    <th style="width:10%">&#128686; Delete</th>
+                {% endif %}
+            </tr>
+        </thead>
+        {% for student in object_list %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ student.first_name }}</td>
+            <td>{{ student.last_name }}</td>
+            <td>{% if teacher.phone_number %}{{ teacher.phone_number }}{% endif %}</td>
+            {% if user.is_authenticated %}
+                <td><a class="btn btn-info" href="{% url 'students:update' student.pk %}">Edit</a></td>
+                <td><a class="btn btn-danger" href="{% url 'students:delete' student.pk %}">Delete</a></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+

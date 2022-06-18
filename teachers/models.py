@@ -24,6 +24,9 @@ class Teacher(models.Model):
         null=True,
         related_name="teachers")
 
+    class Meta:
+        db_table = 'teacher'
+
     def __str__(self):
         return f'{self.first_name}' \
                f' {self.last_name} ' \
