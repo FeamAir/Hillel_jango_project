@@ -27,4 +27,3 @@ class UpdateBaseView:
             form = cls.form_class(instance=model_obj)
 
         return render(request, cls.template_name, {'form': form})
-
