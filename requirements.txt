@@ -10,6 +10,7 @@ flake8-builtins==1.5.3
 flake8-import-order==0.18.1
 flake8-polyfill==1.0.2
 pep8-naming==0.12.1
+Pillow-9.1.1
 python-dotenv==0.20.0
 webargs==8.1.0
 django-debug-toolbar-3.4.0

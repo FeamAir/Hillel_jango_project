@@ -1,5 +1,7 @@
 import datetime
 
+from courses.models import Course
+
 from django.db import models
 
 
@@ -9,6 +11,14 @@ class Group(models.Model):
     end_date = models.DateField(null=True)
     create_datetime = models.DateTimeField(auto_now_add=True)
     update_datetime = models.DateTimeField(auto_now=True)
+    course_group = models.OneToOneField(
+        Course,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="course_group"
+
+    )
 
     class Meta:
         db_table = 'group'
