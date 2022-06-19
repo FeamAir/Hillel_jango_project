@@ -19,14 +19,22 @@ def generate_teachers(request):
 class ListTeachersView(ListView):
     model = Teacher
     template_name = 'teachers/list.html'
+    paginate_by = 8
 
-    def get_queryset(self):
-        teachers_filter = TeacherFilterForm(
+    def get_filter(self):
+        return TeacherFilterForm(
             data=self.request.GET,
             queryset=self.model.objects.all().select_related("group")
         )
 
-        return teachers_filter
+    def get_queryset(self):
+        return self.get_filter().qs
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter'] = self.get_filter().form
+
+        return context
 
 
 class CreateTeachersView(LoginRequiredMixin, CreateView):

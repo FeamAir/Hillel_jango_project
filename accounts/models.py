@@ -18,6 +18,11 @@ class Profile(models.Model):
         null=True,
         blank=True)
 
+    avatar = models.ImageField(
+        upload_to='media/avatars/',
+        default="media/default.jpeg"
+    )
+
     class Meta:
         db_table = 'profile'
 

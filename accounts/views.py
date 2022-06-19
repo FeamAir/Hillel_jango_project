@@ -58,11 +58,16 @@ class AccountUpdateView(LoginRequiredMixin, ProcessFormView):
     def post(self, request, *args, **kwargs):
         user = self.request.user
         profile = user.profile
-        user_form = UserUpdateForm(instance=user, data=request.POST)
+        user_form = UserUpdateForm(
+            instance=user,
+            data=request.POST,
+            files=request.FILES
+        )
         profile_form = ProfileUpdateForm(
             instance=profile,
             data=request.POST,
-            files=request.FILES)
+            files=request.FILES
+        )
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()

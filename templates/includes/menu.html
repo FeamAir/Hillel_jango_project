@@ -2,7 +2,7 @@
 
 <nav class="navbar fixed-top navbar-expand-lg mb-3" style="background-color: #FFC553;">
   <div class="container">
-    <img src="{% static 'img/index.jpeg' %}" alt="" width="30" height="24">
+    <img src="{% static 'img/panda.jpeg' %}" alt="" width="30" height="24">
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -47,6 +47,15 @@
             <li><a class="dropdown-item" href= "{% url 'courses:create' %}">Create</a></li>
           </ul>
         </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            About
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href= "/about/">About Us</a></li>
+            <li><a class="dropdown-item" href= "/about/contact/">Contact</a></li>
+          </ul>
+        </li>
       </ul>
       <div class="d-flex">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -70,7 +79,7 @@
               <li><a class="dropdown-item"
                      href="{% url 'accounts:login' %}">Login</a></li>
               <li><a class="dropdown-item"
-                     href="{% url 'accounts:registration' %}">Registration</a></li>
+                     href="{% url 'accounts:registration' %}">About</a></li>
               {% endif %}
             </ul>
           </li>
